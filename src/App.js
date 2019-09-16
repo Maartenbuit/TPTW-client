@@ -1,67 +1,19 @@
 import React from 'react';
-import request from 'superagent'
-import { connect } from 'react-redux'
+import { Route } from 'react-router-dom'
 
-import { url } from './constants'
-import { setRooms } from './actions'
-import RoomForm from './components/RoomForm'
+import RoomFormContainer from './components/RoomForm/RoomFormContainer'
 
-class App extends React.Component {
-  state ={ 
-    name: '',
-    rooms: []
-    }
-    
+export default class App extends React.Component {
   
-  source = new EventSource(
-    `${url}/stream`
-    )
-  
-  componentDidMount() {
-    this.source.onmessage = (event) => {
-      const { data } = event
-
-      const rooms = JSON.parse(data)
-
-      this.props.setRooms(rooms)
-    }
-  }
-
-  onChange = (event) => {
-    const { target: { value } } = event
-
-    this.setState({ name: value })
-  }
-
-  onSubmit = (event) => {
-    event.preventDefault()
-
-    const { name } = this.state
-
-    request
-      .post(`${url}/room`)
-      .send( { name })
-      .then(response => {
-        this.setState({ name: ''})
-      })
-      .catch(console.error)
-  }
-
   render() {
     return (
-      <div className="App">
-        <RoomForm 
-        name={this.state.name}
-        onChange={this.onChange}
-        onSubmit={this.onSubmit}
-        />
+      <div>
+        {/* <Route exact path="/" component={} /> */}
+        <Route path="/rooms/" component={RoomFormContainer} />
+        <Route path="/rooms/:id" component={RoomFormContainer} />
       </div>
     )
   }
 }
 
-const mapDispatchToProps = {
-  setRooms
-}
 
-export default connect(null, mapDispatchToProps)(App)
