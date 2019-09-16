@@ -1,26 +1,67 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import request from 'superagent'
+import { connect } from 'react-redux'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { url } from './constants'
+import { setRooms } from './actions'
+import RoomForm from './components/RoomForm'
+
+class App extends React.Component {
+  state ={ 
+    name: '',
+    rooms: []
+    }
+    
+  
+  source = new EventSource(
+    `${url}/stream`
+    )
+  
+  componentDidMount() {
+    this.source.onmessage = (event) => {
+      const { data } = event
+
+      const rooms = JSON.parse(data)
+
+      this.props.setRooms(rooms)
+    }
+  }
+
+  onChange = (event) => {
+    const { target: { value } } = event
+
+    this.setState({ name: value })
+  }
+
+  onSubmit = (event) => {
+    event.preventDefault()
+
+    const { name } = this.state
+
+    request
+      .post(`${url}/room`)
+      .send( { name })
+      .then(response => {
+        this.setState({ name: ''})
+      })
+      .catch(console.error)
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <RoomForm 
+        name={this.state.name}
+        onChange={this.onChange}
+        onSubmit={this.onSubmit}
+        />
+      </div>
+    )
+  }
 }
 
-export default App;
+const mapDispatchToProps = {
+  setRooms
+}
+
+export default connect(null, mapDispatchToProps)(App)
