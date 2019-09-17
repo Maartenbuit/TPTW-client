@@ -1,6 +1,6 @@
 import React from 'react'
 import LoginFormContainer from './loginFormContainer'
-import { RoomForm } from './RoomForm';
+import { RoomFormContainer } from './RoomForm/RoomFormContainer';
 
 export default class Homepage extends React.Component {
 
@@ -11,7 +11,7 @@ export default class Homepage extends React.Component {
     if(!user){
       mainForm = <LoginFormContainer />
     } else {
-      mainForm = <RoomForm /> 
+      mainForm = <RoomFormContainer /> 
     }
 
     return (

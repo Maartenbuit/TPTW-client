@@ -19,11 +19,12 @@ function jwt(payload) {
   }
 }
 
-export const login = (name, password) => dispatch => {
+export const login = (name, password) => dispatch => {  
   request
   .post(`${url}/login`)
   .send({ name, password })
   .then(res => {
+    console.log(res.message)
     const action = jwt(res.body)
     dispatch(action)
   })
