@@ -1,5 +1,6 @@
 import request from 'superagent'
 const { url } = require('./constants')
+
 export const ROOMS = 'ROOMS'
 
 export function setRooms (rooms) {
@@ -29,3 +30,14 @@ export const login = (name, password) => dispatch => {
   })
   .catch(console.error)
 }
+
+export const signup = (name, password) => dispatch => {
+    request
+    .post(`${url}/user`)
+    .send({ name, password })
+    .then(res => {
+      const action = jwt(res.body)
+      dispatch(action)
+    })
+    .catch(console.error)
+  }
