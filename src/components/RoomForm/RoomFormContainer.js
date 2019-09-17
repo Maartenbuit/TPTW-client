@@ -42,6 +42,7 @@ class RoomFormContainer extends Component {
 
     request
       .post(`${url}/room`)
+      .set('Authorization', `Bearer ${this.props.user.jwt}`)
       .send( { name })
       .then(response => {
         this.setState({ name: ''})
