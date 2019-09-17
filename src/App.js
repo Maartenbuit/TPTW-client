@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom'
 import RoomFormContainer from './components/RoomForm/RoomFormContainer'
 import LoginFormContainer from './components/loginFormContainer/LoginFormContainer'
 import SignupFormContainer from './components/SignupFormContainer/SignupFormContainer'
+import ChooseSideContainer from './components/ChooseSide/ChooseSideContainer'
 
 export default class App extends React.Component {
   
@@ -14,6 +15,8 @@ export default class App extends React.Component {
         <Route path="/login" component={LoginFormContainer} />
         <Route path="/rooms/" component={RoomFormContainer} />
         <Route path="/rooms/:id" component={RoomFormContainer} />
+        <Route path='/room/:id/chooseSide' component={ChooseSideContainer} />
+        <Route path='/game/:id' />
       </div>
     )
   }
