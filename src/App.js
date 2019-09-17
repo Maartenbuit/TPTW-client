@@ -1,14 +1,9 @@
 import React from 'react';
-
-import request from 'superagent'
-import { connect } from 'react-redux'
-import { url } from './constants'
-import { setRooms } from './actions'
-import RoomForm from './components/RoomForm'
-import Homepage from './components/Homepage';
 import { Route } from 'react-router-dom'
 
+
 import RoomFormContainer from './components/RoomForm/RoomFormContainer'
+import LoginFormContainer from './components/loginFormContainer/LoginFormContainer';
 
 export default class App extends React.Component {
   
@@ -16,8 +11,7 @@ export default class App extends React.Component {
     return (
 
       <div className="App">
-        <Homepage />
-        {/* <Route exact path="/" component={} /> */}
+        <Route exact path="/" component={LoginFormContainer} />
         <Route path="/rooms/" component={RoomFormContainer} />
         <Route path="/rooms/:id" component={RoomFormContainer} />
       </div>
