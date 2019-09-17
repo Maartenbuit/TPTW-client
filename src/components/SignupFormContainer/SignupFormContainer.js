@@ -1,14 +1,26 @@
 import React from 'react'
 import SignupForm from './SignupForm'
-import { connect } from 'react-redux'
-import { signup } from '../../actions'
+// import { connect } from 'react-redux'
+// import { signup } from '../../actions'
+import request from 'superagent'
+const { url } = require('../../constants')
 
-class SignupFormContainer extends React.Component {
+export default class SignupFormContainer extends React.Component {
   state = { name: '', password: '' }
+
+  signUp = (name, password) => {
+    request
+      .post(`${url}/user`)
+      .send({ name, password })
+      .then(res => {
+        console.log(res.body)
+      })
+      .catch(console.error)
+  }
 
   onSubmit = (event) => {
     event.preventDefault()
-    this.props.signup(this.state.name, this.state.password)
+    this.signUp(this.state.name, this.state.password)
     this.props.history.push('/login')
   }
 
@@ -27,7 +39,7 @@ class SignupFormContainer extends React.Component {
   }
 }
 
-export default connect(null, { signup })(SignupFormContainer)
+// export default connect(null, { signup })(SignupFormContainer)
 
 
 
