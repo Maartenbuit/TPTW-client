@@ -1,10 +1,10 @@
 import React from 'react';
 import request from 'superagent'
 import { connect } from 'react-redux'
-
 import { url } from './constants'
 import { setRooms } from './actions'
 import RoomForm from './components/RoomForm'
+import Homepage from './components/Homepage';
 
 class App extends React.Component {
   state ={ 
@@ -50,6 +50,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <Homepage />
         <RoomForm 
         name={this.state.name}
         onChange={this.onChange}
