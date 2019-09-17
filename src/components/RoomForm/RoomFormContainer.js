@@ -19,6 +19,7 @@ class RoomFormContainer extends Component {
     )
   
   componentDidMount() {
+
     this.source.onmessage = (event) => {
       const { data } = event
 
@@ -68,7 +69,7 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state) => {
-  return { rooms: state.rooms }
+  return { rooms: state.rooms, user: state.user }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomFormContainer)

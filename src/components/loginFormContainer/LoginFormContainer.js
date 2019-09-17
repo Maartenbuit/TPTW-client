@@ -4,11 +4,17 @@ import { connect } from 'react-redux'
 import { login } from '../../actions'
 
 class LoginFormContainer extends React.Component {
-  state = { name: '', password: '' }
+  state = { name: '', password: '', loggedIn: false }
 
   onSubmit = (event) => {
     event.preventDefault()
     this.props.login(this.state.name, this.state.password)
+    this.setState({
+      name: '',
+      password: '',
+      loggedIn: true
+    })
+    
   }
 
   onChange = (event) => {
@@ -17,13 +23,25 @@ class LoginFormContainer extends React.Component {
     })
   }
 
+  checkLogin = () => {
+    this.props.history.push('/rooms')
+  }
+
   render() {
     return <LoginForm
       onSubmit={this.onSubmit}
       onChange={this.onChange}
       values={this.state}
+      user={this.props.user}
+      checkLogin={this.checkLogin}
     />
   }
 }
 
-export default connect(null, { login })(LoginFormContainer)
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps, { login })(LoginFormContainer)
