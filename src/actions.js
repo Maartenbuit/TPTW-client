@@ -52,6 +52,16 @@ export const login = (name, password) => dispatch => {
   .catch(console.error)
 }
 
+export const SIDE = 'SIDE'
+
+export function chooseSide(side) {
+return {
+  type: SIDE,
+  payload: side
+}
+}
+
+
 // export const signup = (name, password) => dispatch => {
 //     request
 //     .post(`${url}/user`)

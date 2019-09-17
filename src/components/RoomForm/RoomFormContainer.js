@@ -33,6 +33,7 @@ class RoomFormContainer extends Component {
     const { target: { value } } = event
 
     this.setState({ name: value })
+    
   }
 
   onSubmit = (event) => {
@@ -48,6 +49,7 @@ class RoomFormContainer extends Component {
         this.setState({ name: ''})
       })
       .catch(console.error)
+
   }
 
   
@@ -60,6 +62,7 @@ class RoomFormContainer extends Component {
         onSubmit={this.onSubmit}
         rooms={this.props.rooms}
         />
+        
       </div>
     )
   }
