@@ -12,22 +12,6 @@ class RoomFormContainer extends Component {
     name: '',
     rooms: []
     }
-    
-  
-  source = new EventSource(
-    `${url}/stream`
-    )
-  
-  componentDidMount() {
-
-    this.source.onmessage = (event) => {
-      const { data } = event
-
-      const rooms = JSON.parse(data)
-
-      this.props.setRooms(rooms)
-    }
-  }
 
   onChange = (event) => {
     const { target: { value } } = event
