@@ -33,21 +33,11 @@ export const login = (name, password) => dispatch => {
 
 export const SIDE = 'SIDE'
 
-export function chooseSide(side) {
+export function setSide(side) {
 return {
   type: SIDE,
   payload: side
-}
+  }
 }
 
 
-// export const signup = (name, password) => dispatch => {
-//     request
-//     .post(`${url}/user`)
-//     .send({ name, password })
-//     .then(res => {
-//       const action = jwt(res.body)
-//       dispatch(action)
-//     })
-//     .catch(console.error)
-//   }
