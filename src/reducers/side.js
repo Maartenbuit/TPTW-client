@@ -1,7 +1,7 @@
 import { SIDE } from '../actions'
 
 export default function chooseSide(
-  state = [], action = {}
+  state = "", action = {}
 ) {
   switch(action.type) {
     case SIDE: {
