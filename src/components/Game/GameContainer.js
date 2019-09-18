@@ -1,32 +1,42 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setRoomIdInUser } from '../../actions'
+import { setRooms } from '../../actions'
+import Game from './Game'
+import request from 'superagent'
+const { url } = require('../../constants')
 
 class GameContainer extends Component {
-  
+
+  setRoomIdInUser = (roomId, userId) => {
+    request
+    .put(`${url}/user/${userId}`)
+    .send({roomId})
+    .then(response => console.log(response.body))
+  }
+
   componentDidMount() {
-    console.log('roomId:', Number(this.props.match.params.id))
-    this.props.setRoomIdInUser(Number(this.props.match.params.id), this.props.user.userId)
-    // this.props.getRoomWithUser()
+  
+    this.setRoomIdInUser(Number(this.props.match.params.id), this.props.user.userId)
+    
   }
   
   render() {
+
     return (
       <div>
-        <h1>hello</h1>
+        <Game rooms={this.props.rooms} />
       </div>
     )
   }
 }
 
 const mapDispatchToProps = {
-  setRoomIdInUser,
-  // getRoomWithUser
+  setRooms
 }
 
 const mapStateToProps = (state) => {
   return {
-    // room: state.room,
+    rooms: state.rooms,
     user: state.user
   }
 }

@@ -1,14 +1,29 @@
 import React from 'react';
 import { Route } from 'react-router-dom'
+import { url } from './constants'
+import { setRooms } from './actions'
+import { connect } from 'react-redux'
 import RoomFormContainer from './components/RoomForm/RoomFormContainer'
 import LoginFormContainer from './components/loginFormContainer/LoginFormContainer'
 import SignupFormContainer from './components/SignupFormContainer/SignupFormContainer'
 import GameContainer from './components/Game/GameContainer';
 import ChooseSideContainer from './components/ChooseSide/ChooseSideContainer'
 
-export default class App extends React.Component {
+class App extends React.Component {
   
+  source = new EventSource(
+    `${url}/stream`
+    )
+  
+
   render() {
+    this.source.onmessage = (event) => {
+      const { data } = event
+
+      const rooms = JSON.parse(data)
+
+      this.props.setRooms(rooms)
+    }
     return (
 
       <div className="App">
@@ -22,3 +37,13 @@ export default class App extends React.Component {
     )
   }
 }
+
+const mapDispatchToProps = {
+  setRooms
+}
+
+const mapStateToProps = (state) => {
+  return { rooms: state.rooms, user: state.user }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
