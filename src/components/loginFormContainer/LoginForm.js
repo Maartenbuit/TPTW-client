@@ -20,7 +20,7 @@ export default class LoginForm extends React.Component {
         </label>
 
         <label>
-          password:
+          Password:
           <input
           type='password'
           value={this.props.password}
