@@ -26,6 +26,12 @@ class AxisGameContainer extends Component {
       return alert('true')
 
     } else {
+      request
+        .put(`${url}/user/${this.props.user.userId}/alliedgame1`)
+        .send({
+          answered: true
+        })
+        .catch(console.error)
       return alert('FALSE!!!!')
     }
   }
