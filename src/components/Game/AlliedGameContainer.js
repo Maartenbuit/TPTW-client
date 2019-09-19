@@ -4,9 +4,20 @@ import request from 'superagent'
 import { url } from '../../constants'
 import { connect } from 'react-redux'
 
+
 class AlliedGameContainer extends Component {
+  // state = {
+  //   playerScore: 0
+  // }
+
+  // increaseScore = () =>{
+  //   this.setState ({
+  //     playerScore: this.state.playerScore + 1
+  //   })
+  // }
+
   alliedQuestions = [
-    { q1: 'Allies: Who started the first WW?', answers: ['Germany', 'Holland', 'Poland'] },
+    { q1: 'Allies: Who started the first WW?', answers: ['ZGermany', 'Holland', 'Poland'] },
     { q2: 'Allies: Who started the 2nd WW?', answers: ['1', '2', '3'] },
     { q3: 'Allies: Who started the 3rd WW?', answers: ['a', 'b', 'c'] }
   ]
@@ -14,7 +25,7 @@ class AlliedGameContainer extends Component {
   handleEvent = (event) => {
     if (event.target.value === this.alliedQuestions[0].answers[0]) {
       // console.log(axisQuestions[0].answers[0])
-
+      this.increaseScore()
       request
         .put(`${url}/user/${this.props.user.userId}/alliedgame`)
         .send({
@@ -39,16 +50,19 @@ class AlliedGameContainer extends Component {
   render() {
     const question = this.alliedQuestions[0].q1
     //const answers1 = this.axisQuestions[0].answers
-    console.log('alliedQuestions[0].answers', this.alliedQuestions[0].answers)
-    console.log('this.alliedQuestions test:', this.alliedQuestions)
+    // console.log('alliedQuestions[0].answers', this.alliedQuestions[0].answers)
+    // console.log('this.alliedQuestions test:', this.alliedQuestions)
     return (
       <AlliedGame
         handleEvent={this.handleEvent}
         alliedQuestions={this.alliedQuestions} 
-        question={question} />
+        question={question}
+        />
     )
   }
 }
+
+
 
 const mapStateToProps = (state) => {
   console.log(' LOG state', state)
