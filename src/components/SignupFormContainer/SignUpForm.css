@@ -1,0 +1,30 @@
+.signup-form {
+    display: inline-block;
+    text-align: center;
+    margin: 1em;
+}
+
+html {
+  background-image: url('https://res.cloudinary.com/lmn/image/upload/e_sharpen:150,f_auto,fl_lossy,q_80/v1/gameskinnyc/d/m/q/dmqejbn-d8410.jpg');    
+  font-family: 'Turret Road', cursive;
+}
+
+h3 {
+  font-size: 2em;
+  margin-top: 0em;
+  border: 2px, darkgray; 
+}
+
+button {
+  margin: 2em;
+  margin-bottom: 0.5em;
+  display: inline-block;
+  text-align: center;
+  font-size: 1em; 
+  border-radius: 15%;
+  font-family: 'Turret Road', cursive;
+}
+
+label {
+  margin-left: 1em;
+}
