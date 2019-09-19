@@ -37,16 +37,6 @@ class AlliedGameContainer extends Component {
   }
 
   render() {
-    const room = this.props.rooms.filter(room => {
-      //console.log("ROOM.USER",room.users)
-      if(this.props.user.userId === room.users[0].id){
-        return room
-      }else if(this.props.user.userId === room.users[1].id){
-        return room
-      }
-    })
-    const questionNumber = room[0].round
-    console.log(questionNumber)
     const question = this.alliedQuestions[0].q1
     //const answers1 = this.axisQuestions[0].answers
     console.log('alliedQuestions[0].answers', this.alliedQuestions[0].answers)

@@ -5,7 +5,7 @@ import React from 'react'
 
 export default class AxisGame extends React.Component {
   render() {
-    console.log('this.props.axisQuestions', this.props.axisQuestions)
+    
     const answers = this.props.axisQuestions[0].answers.map(answer =>
       <button value={answer} onClick={this.props.handleEvent}>{answer}</button>
     )
