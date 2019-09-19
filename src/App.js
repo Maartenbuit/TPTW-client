@@ -31,8 +31,7 @@ class App extends React.Component {
         <Route exact path="/" component={SignupFormContainer} />
         <Route path="/login" component={LoginFormContainer} />
         <Route path="/rooms/" component={RoomFormContainer} />
-        <Route path="/room/:id" component={ChooseSideContainer} />
-        <Route path='/room/:id/chooseSide' component={GameContainer} />
+        <Route path="/room/:id" component={GameContainer} />
         <Route path='/game/allies' component={AlliesGameContainer}/>
       </div>
     )

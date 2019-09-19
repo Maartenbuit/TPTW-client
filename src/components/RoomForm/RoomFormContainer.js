@@ -10,7 +10,7 @@ import RoomForm from './RoomForm'
 class RoomFormContainer extends Component {
   state ={ 
     name: '',
-    rooms: []
+    openRooms: []
     }
 
   onChange = (event) => {
@@ -22,7 +22,8 @@ class RoomFormContainer extends Component {
 
   onSubmit = (event) => {
     event.preventDefault()
-
+    setTimeout(this.getOpenRooms,1000)
+    
     const { name } = this.state
 
     request
@@ -34,17 +35,30 @@ class RoomFormContainer extends Component {
       })
       .catch(console.error)
 
+      
   }
 
+  getOpenRooms = () => {
+    const openRoomsArray = this.props.rooms.filter(room => {
+      return room.users.length < 2
+    })
+    this.setState({ openRooms: openRoomsArray })
+  }
+
+  componentDidMount() {
+    setTimeout(this.getOpenRooms,1000)
+  }
   
   render() {
+    
     return (
-      <div className="App">
+      <div>
         <RoomForm
         name={this.state.name}
         onChange={this.onChange}
         onSubmit={this.onSubmit}
         rooms={this.props.rooms}
+        openRooms={this.state.openRooms}
         />
         
       </div>

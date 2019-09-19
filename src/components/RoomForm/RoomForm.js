@@ -15,7 +15,7 @@ export default class RoomForm extends React.Component {
       </form>
       <div>
         {!this.props.rooms ? 'Loading...' : 
-          <ul> {this.props.rooms.map(room => {
+          <ul> {this.props.openRooms.map(room => {
             return <li key={room.id} ><Link to={`/room/${room.id}`}>{room.name}</Link></li>
           })
           }</ul>
