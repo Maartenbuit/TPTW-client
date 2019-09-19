@@ -7,16 +7,13 @@ import request from 'superagent'
 const { url } = require('../../constants')
 
 class GameContainer extends Component {
-  state = {
-    waiting: null,
-    playerOne: '',
-    playerTwo: '',
-  }
+  
   setRoomIdInUser = (roomId, userId) => {
     request
     .put(`${url}/user/${userId}`)
     .send({roomId})
     .then(response => console.log(response.body))
+    .catch(console.error)
   }
 
   getPlayers = () => {
@@ -38,17 +35,37 @@ class GameContainer extends Component {
   }
 
   componentDidMount() {
-    setTimeout(this.getPlayers, 1000)
+    
     this.setRoomIdInUser(Number(this.props.match.params.id), this.props.user.userId) 
+  }
+
+  checkUsers = (Users) => {
+    if (!Users[0]) {
+      return []
+    } else {
+      const users = Users[0].map(user => user)
+      console.log('users:', users)
+      return users
+    }
   }
   
   render() {
+    const room = this.props.rooms.filter(room => {
+      const roomId = Number(this.props.match.params.id)
 
+      return room.id === roomId
+    })
+    const Users = room.map(room => {
+      return room.users
+    })
+
+    const users = this.checkUsers(Users)
+    
     return (
       <div>
-        {this.state.waiting && 'waiting for other player'}
-        <ChooseSideContainer values={this.state}/>
-        <Game rooms={this.props.rooms} values={this.state}/>
+        
+        <Game rooms={this.props.rooms} users={users} room={this.props.match.params.id}/>
+        {users.length === 2 && <ChooseSideContainer users={users} />}
       </div>
     )
   }

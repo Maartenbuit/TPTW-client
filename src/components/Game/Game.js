@@ -4,11 +4,12 @@ export default class Game extends Component {
   
 
   render() {
-
+    
     return (
       <div>
-        <h1>Player one: {this.props.values.playerOne}</h1>
-        <h1>Player Two: {this.props.values.playerTwo}</h1>
+        {this.props.users.length === 0 && 'loading...' }
+        {this.props.users.length === 1 && 'waiting for other player'}
+        {this.props.users.length === 2 && 'Game on!'} 
         
       </div>
     )
