@@ -44,8 +44,8 @@ class ChooseSideContainer extends React.Component {
     return <div> 
       {AllyUser.length === 0 && <ChooseSide
       handleClick={this.handleClick} />}
-      {AllyUser.length === 1 && this.props.user.userId === AllyUser[0].id && <AlliedGameContainer />}
-      {AllyUser.length === 1 && this.props.user.userId !== AllyUser[0].id && <AxisGameContainer />}
+      {AllyUser.length === 1 && this.props.user.userId === AllyUser[0].id && <AlliedGameContainer room={this.props.room}/>}
+      {AllyUser.length === 1 && this.props.user.userId !== AllyUser[0].id && <AxisGameContainer room={this.props.room}/>}
       
       </div>
   }

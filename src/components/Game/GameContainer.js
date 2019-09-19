@@ -44,7 +44,6 @@ class GameContainer extends Component {
       return []
     } else {
       const users = Users[0].map(user => user)
-      console.log('users:', users)
       return users
     }
   }
@@ -65,7 +64,7 @@ class GameContainer extends Component {
       <div>
         
         <Game rooms={this.props.rooms} users={users} room={this.props.match.params.id}/>
-        {users.length === 2 && <ChooseSideContainer users={users} />}
+        {users.length === 2 && <ChooseSideContainer users={users} room={this.props.match.params.id}/>}
       </div>
     )
   }
