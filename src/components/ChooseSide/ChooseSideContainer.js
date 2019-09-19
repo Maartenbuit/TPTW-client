@@ -5,11 +5,13 @@ import { connect } from 'react-redux'
 import request from 'superagent'
 import { url } from '../../constants'
 import userId  from '../Game/GameContainer'
+import AlliedGameContainer from '../Game/AlliedGameContainer'
+import AxisGameContainer from '../Game/AxisGameContainer'
 
 console.log("TEST18:", userId )
 
 class ChooseSideContainer extends React.Component {
-  state = { allies: null }
+  state = { allies: false, axis: false, choosingSide: true }
 
   handleClick = (allies) => {
     if (allies) {
@@ -17,7 +19,7 @@ class ChooseSideContainer extends React.Component {
         .put(`${url}/user/${this.props.user.userId}/allies`)
         .send({ allies: true })
         .then(res => {
-          this.setState({ allies: true })
+          this.setState({ allies: true, choosingSide: false })
         })
         .catch(console.error)
     } else {
@@ -25,22 +27,26 @@ class ChooseSideContainer extends React.Component {
         // .put(`${url}/user/${this.props.user.userId}/allies`)
         // .send({ allies: false })
         // .then(res => {
-          this.setState({ allies: false })
+          this.setState({ axis: true, choosingSide: false })
         // })
-        .catch(console.error)
+        // .catch(console.error)
     }
 
-    if (allies) {
-      this.props.history.push('/game/allies')
-    } else {
-      this.props.history.push('/game/axis')
-    }
+    // if (allies) {
+    //   this.props.history.push('/game/allies')
+    // } else {
+    //   this.props.history.push('/game/axis')
+    // }
   }
 
 
   render() {
-    return <ChooseSide
-      handleClick={this.handleClick} />
+    return <div> 
+      {this.state.allies && <AlliedGameContainer />}
+      {this.state.axis && <AxisGameContainer />}
+      {this.state.choosingSide && <ChooseSide
+      handleClick={this.handleClick} />}
+      </div>
   }
 }
 
