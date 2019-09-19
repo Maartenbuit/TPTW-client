@@ -4,6 +4,7 @@ import SignupForm from './SignupForm'
 // import { signup } from '../../actions'
 import request from 'superagent'
 const { url } = require('../../constants')
+import ('./SignUpForm.css')
 
 export default class SignupFormContainer extends React.Component {
   state = { name: '', password: '' }

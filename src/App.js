@@ -7,7 +7,8 @@ import RoomFormContainer from './components/RoomForm/RoomFormContainer'
 import LoginFormContainer from './components/loginFormContainer/LoginFormContainer'
 import SignupFormContainer from './components/SignupFormContainer/SignupFormContainer'
 import GameContainer from './components/Game/GameContainer';
-
+import ChooseSideContainer from './components/ChooseSide/ChooseSideContainer'
+import AlliesGameContainer from './components/AlliesGame/AlliesGameContainer'
 
 class App extends React.Component {
   
@@ -31,8 +32,7 @@ class App extends React.Component {
         <Route path="/login" component={LoginFormContainer} />
         <Route path="/rooms/" component={RoomFormContainer} />
         <Route path="/room/:id" component={GameContainer} />
-        {/* <Route path='/room/:id/chooseSide' component={GameContainer} />
-        <Route path='/game/:id' /> */}
+        <Route path='/game/allies' component={AlliesGameContainer}/>
       </div>
     )
   }
