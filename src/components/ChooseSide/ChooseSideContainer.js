@@ -4,14 +4,11 @@ import ChooseSide from './ChooseSide'
 import { connect } from 'react-redux'
 import request from 'superagent'
 import { url } from '../../constants'
-import userId  from '../Game/GameContainer'
 import AlliedGameContainer from '../Game/AlliedGameContainer'
 import AxisGameContainer from '../Game/AxisGameContainer'
 
-console.log("TEST18:", userId )
 
 class ChooseSideContainer extends React.Component {
-  state = { allies: false, axis: false, choosingSide: true }
 
   handleClick = (allies) => {
     if (allies) {
@@ -19,33 +16,37 @@ class ChooseSideContainer extends React.Component {
         .put(`${url}/user/${this.props.user.userId}/allies`)
         .send({ allies: true })
         .then(res => {
-          this.setState({ allies: true, choosingSide: false })
+          
         })
         .catch(console.error)
     } else {
-      // request
-        // .put(`${url}/user/${this.props.user.userId}/allies`)
-        // .send({ allies: false })
-        // .then(res => {
-          this.setState({ axis: true, choosingSide: false })
-        // })
-        // .catch(console.error)
+      const userId = this.props.users.filter(user => {
+        return this.props.user.userId !== user.id
+      })
+      request
+        .put(`${url}/user/${userId[0].id}/allies`)
+        .send({ allies: true })
+        .then(res => {
+          
+        })
+        .catch(console.error)
+      
     }
-
-    // if (allies) {
-    //   this.props.history.push('/game/allies')
-    // } else {
-    //   this.props.history.push('/game/axis')
-    // }
+    
   }
 
 
   render() {
+    const AllyUser = this.props.users.filter(user => {
+      return user.allies === true
+    })
+    
     return <div> 
-      {this.state.allies && <AlliedGameContainer />}
-      {this.state.axis && <AxisGameContainer />}
-      {this.state.choosingSide && <ChooseSide
+      {AllyUser.length === 0 && <ChooseSide
       handleClick={this.handleClick} />}
+      {AllyUser.length === 1 && this.props.user.userId === AllyUser[0].id && <AlliedGameContainer />}
+      {AllyUser.length === 1 && this.props.user.userId !== AllyUser[0].id && <AxisGameContainer />}
+      
       </div>
   }
 }
@@ -58,7 +59,6 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state) => {  
-  console.log(' LOG state', state)
 
   return { user: state.user, side: state.side }
 }

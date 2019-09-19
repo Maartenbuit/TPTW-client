@@ -40,4 +40,11 @@ return {
   }
 }
 
+export const SET_OPEN_ROOMS = 'SET_OPEN_ROOMS'
 
+export function setOpenRooms(openRooms) {
+  return {
+    type: SET_OPEN_ROOMS,
+    payload: openRooms
+  }
+}

@@ -9,3 +9,5 @@ export default class AlliedGameContainer extends Component {
     )
   }
 }
+
+

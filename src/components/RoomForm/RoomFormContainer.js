@@ -3,14 +3,13 @@ import request from 'superagent'
 import { connect } from 'react-redux'
 
 import { url } from '../../constants'
-import { setRooms } from '../../actions'
+import { setOpenRooms } from '../../actions'
 
 import RoomForm from './RoomForm'
 
 class RoomFormContainer extends Component {
   state ={ 
     name: '',
-    openRooms: []
     }
 
   onChange = (event) => {
@@ -22,7 +21,6 @@ class RoomFormContainer extends Component {
 
   onSubmit = (event) => {
     event.preventDefault()
-    setTimeout(this.getOpenRooms,1000)
     
     const { name } = this.state
 
@@ -38,18 +36,11 @@ class RoomFormContainer extends Component {
       
   }
 
-  getOpenRooms = () => {
+
+  render() {
     const openRoomsArray = this.props.rooms.filter(room => {
       return room.users.length < 2
     })
-    this.setState({ openRooms: openRoomsArray })
-  }
-
-  componentDidMount() {
-    setTimeout(this.getOpenRooms,1000)
-  }
-  
-  render() {
     
     return (
       <div>
@@ -58,7 +49,7 @@ class RoomFormContainer extends Component {
         onChange={this.onChange}
         onSubmit={this.onSubmit}
         rooms={this.props.rooms}
-        openRooms={this.state.openRooms}
+        openRooms={openRoomsArray}
         />
         
       </div>
@@ -66,12 +57,8 @@ class RoomFormContainer extends Component {
   }
 }
 
-const mapDispatchToProps = {
-  setRooms
-}
-
 const mapStateToProps = (state) => {
-  return { rooms: state.rooms, user: state.user }
+  return { rooms: state.rooms, user: state.user, openRooms: state.openRooms }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoomFormContainer)
+export default connect(mapStateToProps)(RoomFormContainer)
