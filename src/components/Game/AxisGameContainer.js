@@ -7,10 +7,14 @@ import axisQuestions from './AxisQuestions'
 
 class AxisGameContainer extends Component {
 
-  handleEvent = (event) => {
-    if (event.target.value === axisQuestions[0].answers[0]) {
-      
+  state = {
+    message: ""
+  }
 
+   handleEvent = (event) => {
+    if (event.target.value === axisQuestions[0].answers[0]) {
+      this.setState({message: "Your answer is correct!"})
+      
       request
         .put(`${url}/user/${this.props.user.userId}/alliedgame`)
         .send({
@@ -18,23 +22,21 @@ class AxisGameContainer extends Component {
           answered: true
         })
         .catch(console.error)
-
-      return alert('true')
+        return
 
     } else {
+      this.setState({message: "Your answer is wrong!"})
       request
         .put(`${url}/user/${this.props.user.userId}/alliedgame1`)
         .send({
           answered: true
         })
         .catch(console.error)
-      return alert('FALSE!!!!')
-    }
+        return
+    } 
   }
 
-
   nextRound = () => {
-    
     request
       .put(`${url}/room/${Number(this.props.room)}/nextRound`)
       .catch(console.error)
@@ -57,6 +59,7 @@ class AxisGameContainer extends Component {
         return room
       }
     })
+    console.log(room)
     
     const questionNumber = room.map(room => room.round)
   
@@ -75,11 +78,14 @@ class AxisGameContainer extends Component {
     const question = axisQuestions[questionNumber[0]].q
     const answers = axisQuestions[questionNumber[0]].answers
     
+    console.log("MESSAGE:", this.state.message)
+
     return (
       <AxisGame
         handleEvent={this.handleEvent}
         question={question} 
-        answers={answers}/>
+        answers={answers}
+        message={this.state.message} />
     )
   }
 }

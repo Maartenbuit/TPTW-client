@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 export default class AxisGame extends React.Component {
   shuffle = array => {
     return array.sort(() =>{
@@ -22,6 +21,8 @@ export default class AxisGame extends React.Component {
         <h1>Question: </h1>
         <p>{this.props.question}</p>
         {answers}
+
+        <h1 className='userMessage'>{this.props.message}</h1>
       </div>
     )
   }

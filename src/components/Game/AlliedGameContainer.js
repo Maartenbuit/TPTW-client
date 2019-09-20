@@ -8,8 +8,17 @@ import alliedQuestions from './alliedQuestions'
 
 class AlliedGameContainer extends Component {
 
+
   handleEvent = (event) => {
-    if (event.target.value === alliedQuestions[0].answers[0]) {
+    
+    const correct = alliedQuestions[0].answers[0]
+    console.log('correct test:', correct)
+    const { value } = event.target
+    console.log('value test:', value)
+    const isCorrect = value === correct
+    console.log('isCorrect test:', isCorrect)
+
+    if (isCorrect) {
       
       request
         .put(`${url}/user/${this.props.user.userId}/alliedgame`)
@@ -42,6 +51,7 @@ class AlliedGameContainer extends Component {
   }
 
   render() {
+
     const room = this.props.rooms.filter(room => {
       if (Number(this.props.room) === room.id){
         return room
