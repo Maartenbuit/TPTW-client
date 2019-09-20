@@ -3,7 +3,7 @@ import request from 'superagent'
 import { connect } from 'react-redux'
 
 import { url } from '../../constants'
-import { setOpenRooms } from '../../actions'
+//import { setOpenRooms } from '../../actions'
 
 import RoomForm from './RoomForm'
 
