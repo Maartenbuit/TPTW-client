@@ -3,29 +3,14 @@ import AlliedGame from '../Game/AlliedGame'
 import request from 'superagent'
 import { url } from '../../constants'
 import { connect } from 'react-redux'
+import alliedQuestions from './alliedQuestions'
 
 
 class AlliedGameContainer extends Component {
-  // state = {
-  //   playerScore: 0
-  // }
-
-  // increaseScore = () =>{
-  //   this.setState ({
-  //     playerScore: this.state.playerScore + 1
-  //   })
-  // }
-
-  alliedQuestions = [
-    { q1: 'Allies: Who started the first WW?', answers: ['ZGermany', 'Holland', 'Poland'] },
-    { q2: 'Allies: Who started the 2nd WW?', answers: ['1', '2', '3'] },
-    { q3: 'Allies: Who started the 3rd WW?', answers: ['a', 'b', 'c'] }
-  ]
 
   handleEvent = (event) => {
-    if (event.target.value === this.alliedQuestions[0].answers[0]) {
-      // console.log(axisQuestions[0].answers[0])
-      this.increaseScore()
+    if (event.target.value === alliedQuestions[0].answers[0]) {
+      
       request
         .put(`${url}/user/${this.props.user.userId}/alliedgame`)
         .send({
@@ -47,17 +32,43 @@ class AlliedGameContainer extends Component {
     }
   }
 
+  resetAnswers = () => {
+    request
+      .put(`${url}/user/${this.props.user.userId}/resetAnswer`)
+      .send({
+        answered: false
+      })
+      .catch(console.error)
+  }
+
   render() {
-    const question = this.alliedQuestions[0].q1
-    //const answers1 = this.axisQuestions[0].answers
-    // console.log('alliedQuestions[0].answers', this.alliedQuestions[0].answers)
-    // console.log('this.alliedQuestions test:', this.alliedQuestions)
+    const room = this.props.rooms.filter(room => {
+      if (Number(this.props.room) === room.id){
+        return room
+      }
+    })
+    
+    const questionNumber = room.map(room => room.round)
+  
+    const bothPlayersAnswered = room[0].users.filter(user => {
+      return user.answered === true
+    })
+
+
+    if (bothPlayersAnswered.length === 2) {
+      this.resetAnswers()
+    }
+    
+    console.log('question:', questionNumber)
+    
+    const question = alliedQuestions[questionNumber[0]].q
+    const answers = alliedQuestions[questionNumber[0]].answers
+
     return (
       <AlliedGame
-        handleEvent={this.handleEvent}
-        alliedQuestions={this.alliedQuestions} 
+        handleEvent={this.handleEvent} 
         question={question}
-        />
+        answers={answers} />
     )
   }
 }
@@ -65,7 +76,6 @@ class AlliedGameContainer extends Component {
 
 
 const mapStateToProps = (state) => {
-  console.log(' LOG state', state)
 
   return {
     user: state.user,
