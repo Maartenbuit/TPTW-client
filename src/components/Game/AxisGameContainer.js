@@ -71,6 +71,7 @@ class AxisGameContainer extends Component {
         return room
       }
     })
+    console.log(room)
     
     const questionNumber = room.map(room => room.round)
   
