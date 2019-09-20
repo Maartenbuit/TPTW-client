@@ -11,16 +11,31 @@ class AxisGameContainer extends Component {
     message: ""
   }
 
+
    handleEvent = (event) => {
-    if (event.target.value === axisQuestions[0].answers[0]) {
+    const room = this.props.rooms.filter(room => {
+      if (Number(this.props.room) === room.id){
+        return room
+      }
+    })
+    
+    const questionNumber = room.map(room => room.round)
+    const correct = axisQuestions[questionNumber[0]].answers[0]
+    console.log('correct test:', correct)
+    const { value } = event.target
+    console.log('value test:', value)
+    const isCorrect = value === correct
+    console.log('isCorrect test:', isCorrect)
+
+    if (isCorrect) {
       this.setState({message: "Your answer is correct!"})
       
       request
         .put(`${url}/user/${this.props.user.userId}/alliedgame`)
-        .send({
-          score: +1,
-          answered: true
-        })
+        // .send({
+        //   score: +1,
+        //   answered: true
+        // })
         .catch(console.error)
         return
 
@@ -28,9 +43,9 @@ class AxisGameContainer extends Component {
       this.setState({message: "Your answer is wrong!"})
       request
         .put(`${url}/user/${this.props.user.userId}/alliedgame1`)
-        .send({
-          answered: true
-        })
+        // .send({
+        //   answered: true
+        // })
         .catch(console.error)
         return
     } 
@@ -59,7 +74,7 @@ class AxisGameContainer extends Component {
         return room
       }
     })
-    console.log(room)
+    
     
     const questionNumber = room.map(room => room.round)
   
@@ -73,12 +88,8 @@ class AxisGameContainer extends Component {
       this.nextRound()
     }
     
-    console.log('question:', questionNumber)
-    
     const question = axisQuestions[questionNumber[0]].q
     const answers = axisQuestions[questionNumber[0]].answers
-    
-    console.log("MESSAGE:", this.state.message)
 
     return (
       <AxisGame

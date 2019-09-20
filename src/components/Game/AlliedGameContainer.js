@@ -7,11 +7,20 @@ import alliedQuestions from './alliedQuestions'
 
 
 class AlliedGameContainer extends Component {
-
+  state = {
+    message: ""
+  }
 
   handleEvent = (event) => {
+    const room = this.props.rooms.filter(room => {
+      if (Number(this.props.room) === room.id){
+        return room
+      }
+    })
     
-    const correct = alliedQuestions[0].answers[0]
+    const questionNumber = room.map(room => room.round)
+
+    const correct = alliedQuestions[questionNumber[0]].answers[0]
     console.log('correct test:', correct)
     const { value } = event.target
     console.log('value test:', value)
@@ -19,25 +28,27 @@ class AlliedGameContainer extends Component {
     console.log('isCorrect test:', isCorrect)
 
     if (isCorrect) {
+      this.setState({message: "Your answer is correct!"})
       
       request
         .put(`${url}/user/${this.props.user.userId}/alliedgame`)
-        .send({
-          score: +1,
-          answered: true
-        })
+        // .send({
+        //   score: +1,
+        //   answered: true
+        // })
         .catch(console.error)
 
-      return alert('true')
+      return
 
     } else {
+      this.setState({message: "Your answer is wrong!"})
       request
         .put(`${url}/user/${this.props.user.userId}/alliedgame1`)
-        .send({
-          answered: true
-        })
+        // .send({
+        //   answered: true
+        // })
         .catch(console.error)
-      return alert('FALSE!!!!')
+      return 
     }
   }
 
@@ -69,8 +80,6 @@ class AlliedGameContainer extends Component {
       this.resetAnswers()
     }
     
-    console.log('question:', questionNumber)
-    
     const question = alliedQuestions[questionNumber[0]].q
     const answers = alliedQuestions[questionNumber[0]].answers
 
@@ -78,7 +87,8 @@ class AlliedGameContainer extends Component {
       <AlliedGame
         handleEvent={this.handleEvent} 
         question={question}
-        answers={answers} />
+        answers={answers} 
+        message={this.state.message}/>
     )
   }
 }

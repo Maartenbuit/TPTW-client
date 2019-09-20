@@ -9,7 +9,8 @@ export default class AxisGame extends React.Component {
   
   render() {
     
-    const shuffled = this.shuffle(this.props.answers)
+    const copyAnswers = this.props.answers.map(answer => answer)
+    const shuffled = this.shuffle(copyAnswers)
     const answers = shuffled.map(answer =>
       <button value={answer} onClick={this.props.handleEvent}>{answer}</button>
     )
