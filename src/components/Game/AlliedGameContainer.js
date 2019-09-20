@@ -25,7 +25,6 @@ class AlliedGameContainer extends Component {
   handleEvent = (event) => {
     if (event.target.value === this.alliedQuestions[0].answers[0]) {
       // console.log(axisQuestions[0].answers[0])
-      this.increaseScore()
       request
         .put(`${url}/user/${this.props.user.userId}/alliedgame`)
         .send({

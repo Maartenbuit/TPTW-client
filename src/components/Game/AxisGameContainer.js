@@ -5,16 +5,20 @@ import { url } from '../../constants'
 import { connect } from 'react-redux'
 
 class AxisGameContainer extends Component {
+  state = {
+    message: ""
+  }
+
   axisQuestions = [
     { q: 'Who started the first WW?', answers: ['Germany', 'Holland', 'Poland'] },
     { q: 'Who started the 2nd WW?', answers: ['1', '2', '3'] },
     { q: 'Who started the 3rd WW?', answers: ['a', 'b', 'c'] }
   ]
 
-  handleEvent = (event) => {
+   handleEvent = (event) => {
     if (event.target.value === this.axisQuestions[0].answers[0]) {
+      this.setState({message: "Your answer is correct!"})
       
-
       request
         .put(`${url}/user/${this.props.user.userId}/alliedgame`)
         .send({
@@ -22,23 +26,21 @@ class AxisGameContainer extends Component {
           answered: true
         })
         .catch(console.error)
-
-      return alert('true')
+        return
 
     } else {
+      this.setState({message: "Your answer is wrong!"})
       request
         .put(`${url}/user/${this.props.user.userId}/alliedgame1`)
         .send({
           answered: true
         })
         .catch(console.error)
-      return alert('FALSE!!!!')
-    }
+        return
+    } 
   }
 
-
   nextRound = () => {
-    
     request
       .put(`${url}/user/${this.props.user.userId}/alliedgame`)
       .send({
@@ -86,11 +88,14 @@ class AxisGameContainer extends Component {
     
     const question = this.axisQuestions[questionNumber[0]].q
     
+    console.log("MESSAGE:", this.state.message)
+
     return (
       <AxisGame
         handleEvent={this.handleEvent}
         axisQuestions={this.axisQuestions} 
-        question={question} />
+        question={question}
+        message={this.state.message} />
     )
   }
 }

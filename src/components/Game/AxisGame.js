@@ -1,7 +1,4 @@
 import React from 'react'
-// import { request } from 'https';
-// import { url } from '../../constants'
-// import { connect } from 'react-redux'
 
 export default class AxisGame extends React.Component {
   render() {
@@ -17,6 +14,8 @@ export default class AxisGame extends React.Component {
         <h1>Question: </h1>
         <p>{this.props.question}</p>
         {answers}
+
+        <h1 className='userMessage'>{this.props.message}</h1>
       </div>
     )
   }
