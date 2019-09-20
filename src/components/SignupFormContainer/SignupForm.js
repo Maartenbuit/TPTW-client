@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 export default class SignupForm extends React.Component {
 
   render() {
-    return <div className="signup-form">
-      <form onSubmit={this.props.onSubmit}>
+    return <div className="form-container">
+      <form className="form" onSubmit={this.props.onSubmit}>
 
-        <h3>Sign up to play</h3>
+        <h2>Sign up to play</h2>
 
         <label>
           Name:
@@ -31,9 +31,10 @@ export default class SignupForm extends React.Component {
           />
         </label>
         <button type='submit'>Sign up</button>
-      </form>
-      <p>If you already are registered please <Link to={`/login`}>click here</Link></p>
 
+        <p>If you already are registered please <Link to={`/login`}>click here</Link></p>
+        <br></br>
+      </form>
     </div>
   }
 }
