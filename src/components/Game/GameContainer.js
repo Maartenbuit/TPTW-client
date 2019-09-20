@@ -50,6 +50,17 @@ class GameContainer extends Component {
       return users
     }
   }
+
+  resetUser = (event) => {
+    request
+      .put(`${url}/user/${this.props.user.userId}/resetUser`)
+      .catch(console.error)
+    
+      request
+        .put(`${url}/room/${Number(this.props.match.params.id)}/resetRoom`)
+        .catch(console.error)
+    this.props.history.push('/rooms')
+  }
   
   render() {
     
@@ -74,11 +85,13 @@ class GameContainer extends Component {
         
         {!endGame && <Game rooms={this.props.rooms} 
         users={users} 
-        room={this.props.match.params.id}/>}
+        room={this.props.match.params.id}
+        resetUser={this.resetUser}/>}
         {users.length === 2 && !endGame && 
         <ChooseSideContainer users={users} 
         room={this.props.match.params.id}/>}
-        {endGame && <GameOver users={users} /> }
+        {endGame && <GameOver users={users} 
+        resetUser={this.resetUser}/> }
       </div>
     )
   }
