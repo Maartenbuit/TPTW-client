@@ -82,16 +82,16 @@ class GameContainer extends Component {
     
     return (
       <div>
-        
+        <button value='reset' onClick={this.resetUser}>Go back to lobby</button>
         {!endGame && <Game rooms={this.props.rooms} 
         users={users} 
         room={this.props.match.params.id}
-        resetUser={this.resetUser}/>}
+        />}
         {users.length === 2 && !endGame && 
         <ChooseSideContainer users={users} 
         room={this.props.match.params.id}/>}
         {endGame && <GameOver users={users} 
-        resetUser={this.resetUser}/> }
+        /> }
       </div>
     )
   }

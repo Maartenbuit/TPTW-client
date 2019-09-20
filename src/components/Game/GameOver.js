@@ -10,7 +10,6 @@ export default class GameOver extends Component {
 
     return (
       <div>
-        <button value='reset' onClick={this.props.resetUser}>Go back to lobby</button>
         <h1>Game Over</h1>
         {alliedVictory && <h1> The Allied Forces are victorious! </h1>}
         {axisVictory && <h1> The Axis Forces are victorious! </h1>}

@@ -11,7 +11,7 @@ export default class Game extends Component {
         {this.props.users.length === 1 && 'waiting for other player'}
         {this.props.users.length === 2 && 
         <div>
-          <button value='reset' onClick={this.props.resetUser}>Go back to lobby</button>
+          
         <h1>{`Game on ${this.props.users[0].name} & ${this.props.users[1].name}!`}</h1>
         
         <h4>{this.props.users[0].name}'s score: {this.props.users[0].score}</h4>
