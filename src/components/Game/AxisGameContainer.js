@@ -4,6 +4,8 @@ import request from 'superagent'
 import { url } from '../../constants'
 import { connect } from 'react-redux'
 import axisQuestions from './AxisQuestions'
+import right from '../../right2.wav'
+import wrong from '../../wrong.wav'
 
 class AxisGameContainer extends Component {
 
@@ -29,6 +31,8 @@ class AxisGameContainer extends Component {
 
     if (isCorrect) {
       this.setState({message: "Your answer is correct!"})
+      let audio = new Audio(right)
+      audio.play()
       
       request
         .put(`${url}/user/${this.props.user.userId}/alliedgame`)
@@ -41,6 +45,8 @@ class AxisGameContainer extends Component {
 
     } else {
       this.setState({message: "Your answer is wrong!"})
+      let audio = new Audio(wrong)
+      audio.play()
       request
         .put(`${url}/user/${this.props.user.userId}/alliedgame1`)
         // .send({
