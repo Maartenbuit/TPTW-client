@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { setRooms } from '../../actions'
 import Game from './Game'
+import GameOver from './GameOver'
 import ChooseSideContainer from '../ChooseSide/ChooseSideContainer'
 import request from 'superagent'
+import axisQuestions from './AxisQuestions'
 const { url } = require('../../constants')
+
 
 class GameContainer extends Component {
   
@@ -49,11 +52,17 @@ class GameContainer extends Component {
   }
   
   render() {
+    
+
     const room = this.props.rooms.filter(room => {
       const roomId = Number(this.props.match.params.id)
 
       return room.id === roomId
     })
+
+    const endGame = axisQuestions.length === room[0].round
+    console.log('endGame:', endGame, 'q:', axisQuestions.length, 'round:', room[0].round) 
+    
     const Users = room.map(room => {
       return room.users
     })
@@ -63,8 +72,13 @@ class GameContainer extends Component {
     return (
       <div>
         
-        <Game rooms={this.props.rooms} users={users} room={this.props.match.params.id}/>
-        {users.length === 2 && <ChooseSideContainer users={users} room={this.props.match.params.id}/>}
+        {!endGame && <Game rooms={this.props.rooms} 
+        users={users} 
+        room={this.props.match.params.id}/>}
+        {users.length === 2 && !endGame && 
+        <ChooseSideContainer users={users} 
+        room={this.props.match.params.id}/>}
+        {endGame && <GameOver users={users} /> }
       </div>
     )
   }

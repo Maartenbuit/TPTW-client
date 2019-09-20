@@ -1,9 +1,16 @@
 import React from 'react'
 
 export default class AxisGame extends React.Component {
+  shuffle = array => {
+    return array.sort(() =>{
+      return 0.5 - (Math.random()*3)
+    })
+  }
+  
   render() {
     
-    const answers = this.props.axisQuestions[0].answers.map(answer =>
+    const shuffled = this.shuffle(this.props.answers)
+    const answers = shuffled.map(answer =>
       <button value={answer} onClick={this.props.handleEvent}>{answer}</button>
     )
     return (

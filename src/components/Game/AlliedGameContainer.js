@@ -3,18 +3,15 @@ import AlliedGame from '../Game/AlliedGame'
 import request from 'superagent'
 import { url } from '../../constants'
 import { connect } from 'react-redux'
+import alliedQuestions from './alliedQuestions'
 
 
 class AlliedGameContainer extends Component {
 
-  alliedQuestions = [
-    { q: 'Allies: Who started the first WW?', answers: ['Germany', 'Holland', 'Poland'] },
-    { q: 'Allies: Who started the 2nd WW?', answers: ['1', '2', '3'] },
-    { q: 'Allies: Who started the 3rd WW?', answers: ['a', 'b', 'c'] },
-  ]
 
   handleEvent = (event) => {
-    const correct = this.alliedQuestions[0].answers[0]
+    
+    const correct = alliedQuestions[0].answers[0]
     console.log('correct test:', correct)
     const { value } = event.target
     console.log('value test:', value)
@@ -44,18 +41,44 @@ class AlliedGameContainer extends Component {
     }
   }
 
+  resetAnswers = () => {
+    request
+      .put(`${url}/user/${this.props.user.userId}/resetAnswer`)
+      .send({
+        answered: false
+      })
+      .catch(console.error)
+  }
+
   render() {
-    const question = this.alliedQuestions[0].q
-    //const answers1 = this.axisQuestions[0].answers
-    // console.log('alliedQuestions[0].answers', this.alliedQuestions[0].answers)
-    // console.log('this.alliedQuestions test:', this.alliedQuestions)
+
+    const room = this.props.rooms.filter(room => {
+      if (Number(this.props.room) === room.id){
+        return room
+      }
+    })
+    
+    const questionNumber = room.map(room => room.round)
+  
+    const bothPlayersAnswered = room[0].users.filter(user => {
+      return user.answered === true
+    })
+
+
+    if (bothPlayersAnswered.length === 2) {
+      this.resetAnswers()
+    }
+    
+    console.log('question:', questionNumber)
+    
+    const question = alliedQuestions[questionNumber[0]].q
+    const answers = alliedQuestions[questionNumber[0]].answers
+
     return (
       <AlliedGame
-        handleEvent={this.handleEvent}
-        alliedQuestions={this.alliedQuestions} 
+        handleEvent={this.handleEvent} 
         question={question}
-        rooms={this.props.rooms}
-        />
+        answers={answers} />
     )
   }
 }
@@ -63,7 +86,6 @@ class AlliedGameContainer extends Component {
 
 
 const mapStateToProps = (state) => {
-  console.log(' LOG state', state)
 
   return {
     user: state.user,

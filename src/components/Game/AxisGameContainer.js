@@ -3,20 +3,16 @@ import AxisGame from '../Game/AxisGame'
 import request from 'superagent'
 import { url } from '../../constants'
 import { connect } from 'react-redux'
+import axisQuestions from './AxisQuestions'
 
 class AxisGameContainer extends Component {
+
   state = {
     message: ""
   }
 
-  axisQuestions = [
-    { q: 'Who started the first WW?', answers: ['Germany', 'Holland', 'Poland'] },
-    { q: 'Who started the 2nd WW?', answers: ['1', '2', '3'] },
-    { q: 'Who started the 3rd WW?', answers: ['a', 'b', 'c'] }
-  ]
-
    handleEvent = (event) => {
-    if (event.target.value === this.axisQuestions[0].answers[0]) {
+    if (event.target.value === axisQuestions[0].answers[0]) {
       this.setState({message: "Your answer is correct!"})
       
       request
@@ -42,15 +38,7 @@ class AxisGameContainer extends Component {
 
   nextRound = () => {
     request
-      .put(`${url}/user/${this.props.user.userId}/alliedgame`)
-      .send({
-        answered: false
-      })
-      .catch(console.error)
-    
-    request
       .put(`${url}/room/${Number(this.props.room)}/nextRound`)
-      .send({ round: +1 })
       .catch(console.error)
 
   }
@@ -87,15 +75,16 @@ class AxisGameContainer extends Component {
     
     console.log('question:', questionNumber)
     
-    const question = this.axisQuestions[questionNumber[0]].q
+    const question = axisQuestions[questionNumber[0]].q
+    const answers = axisQuestions[questionNumber[0]].answers
     
     console.log("MESSAGE:", this.state.message)
 
     return (
       <AxisGame
         handleEvent={this.handleEvent}
-        axisQuestions={this.axisQuestions} 
-        question={question}
+        question={question} 
+        answers={answers}
         message={this.state.message} />
     )
   }
