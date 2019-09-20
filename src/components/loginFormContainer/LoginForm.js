@@ -4,10 +4,13 @@ import { Link } from 'react-router-dom'
 export default class LoginForm extends React.Component {
 
   render(){
-    return <div className="login-form">
+    return <div className="form-container">
       {this.props.user.jwt && <Link to={`/rooms`}><button>Go to lobby</button></Link>}
       {this.props.values.loggedIn && !this.props.user.jwt ? <div>Please supply a valid name and password to log in.</div> : ''}
-      <form onSubmit={this.props.onSubmit}>
+      <form classname="form" onSubmit={this.props.onSubmit}>
+
+      <h2>Login</h2>
+
         <label>
           Name:
           <input 

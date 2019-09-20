@@ -1,4 +1,3 @@
-
 .form-container {
   display: flex;
   justify-content: center;
@@ -11,6 +10,7 @@ text-align: center;
 background: rgba(242, 248, 252, 0.6);
 border-radius: 30px;
 }
+
 
 body {
 background-image: url('https://res.cloudinary.com/lmn/image/upload/e_sharpen:150,f_auto,fl_lossy,q_80/v1/gameskinnyc/d/m/q/dmqejbn-d8410.jpg');    

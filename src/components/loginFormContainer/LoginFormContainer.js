@@ -2,6 +2,7 @@ import React from 'react'
 import LoginForm from './LoginForm'
 import { connect } from 'react-redux'
 import { login } from '../../actions'
+import './LoginForm.css'
 
 class LoginFormContainer extends React.Component {
   state = { name: '', password: '', loggedIn: false }

@@ -1,15 +1,27 @@
-.signup-form {
-    display: inline-block;
-    text-align: center;
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 1em;
 }
 
-html {
+.form{
+  text-align: center;
+  background: rgba(242, 248, 252, 0.6);
+  border-radius: 30px;
+}
+
+a{
+  color: black;
+}
+
+
+body {
   background-image: url('https://res.cloudinary.com/lmn/image/upload/e_sharpen:150,f_auto,fl_lossy,q_80/v1/gameskinnyc/d/m/q/dmqejbn-d8410.jpg');    
   font-family: 'Turret Road', cursive;
-  /* background-position: center; */
-  /* background-repeat: no-repeat; 
-  background-size: cover;*/
+  background-repeat: no-repeat;
+  background-color: black;  
+  font-size: 18px;
 } 
 
 h3 {
@@ -30,4 +42,12 @@ button {
 
 label {
   margin-left: 1em;
+}
+
+h2{
+  font-size: 80px;
+}
+
+p{
+  font-size: 20px;
 }
